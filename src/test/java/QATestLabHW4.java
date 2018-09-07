@@ -47,7 +47,7 @@ public class QATestLabHW4 {
     @Test(dependsOnMethods = "addNewProduct")
     public void checkIsNewProductAdded(){
         eventDriver.get("http://prestashop-automation.qatestlab.com.ua/ru/");
-        eventDriver.findElement(By.className("all-product-link")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(eventDriver.findElement(By.className("all-product-link")))).click();
         WebElement newProduct = eventDriver.findElement(By.xpath("//a[text()='test1']"));
         Assert.assertTrue(newProduct.isDisplayed());
         newProduct.click();
@@ -73,15 +73,18 @@ public class QATestLabHW4 {
         passInput.clear();
         passInput.sendKeys(adminPass);
         submitButton.click();
+        wait.until(ExpectedConditions.visibilityOf(eventDriver.findElement(By.id("header_employee_box"))));
     }
 
     private void openProductsPage() {
         WebElement adminCatalog = eventDriver.findElement(By.id("subtab-AdminCatalog"));
         adminCatalog.click();
+        wait.until(ExpectedConditions.elementToBeClickable(eventDriver.findElement(By.xpath("//a[@id='page-header-desc-configuration-add']//span"))));
     }
 
     private void addNewProduct() {
         eventDriver.findElement(By.xpath("//a[@id='page-header-desc-configuration-add']//span")).click();
+        wait.until(ExpectedConditions.visibilityOf(eventDriver.findElement(By.id("form_step1_name_1"))));
         WebElement inputName = eventDriver.findElement(By.id("form_step1_name_1"));
         inputName.sendKeys("test1");
         WebElement inputCount = eventDriver.findElement(By.id("form_step1_qty_0_shortcut"));
@@ -93,11 +96,16 @@ public class QATestLabHW4 {
         WebElement activateButton = eventDriver.findElement(By.className("switch-input "));
         activateButton.click();
         wait.until(ExpectedConditions.visibilityOf(eventDriver.findElement(By.className("growl-message"))));
+        System.out.println(eventDriver.findElement(By.className("growl-message")).getText());
+        Assert.assertEquals(eventDriver.findElement(By.className("growl-message")).getText(),"Настройки обновлены.");
         eventDriver.findElement(By.className("growl-close")).click();
-        WebElement saveButton = eventDriver.findElement(By.xpath("//button[@type='submit']//span"));
+        wait.until(ExpectedConditions.invisibilityOf(eventDriver.findElement(By.className("growl-message"))));
+        WebElement saveButton = eventDriver.findElement(By.xpath("//input[@type='submit']")); //button[@type='submit']//span - old path
         saveButton.click();
         wait.until(ExpectedConditions.visibilityOf(eventDriver.findElement(By.className("growl-message"))));
+        Assert.assertEquals(eventDriver.findElement(By.className("growl-message")).getText(),"Настройки обновлены.");
         eventDriver.findElement(By.className("growl-close")).click();
+        wait.until(ExpectedConditions.invisibilityOf(eventDriver.findElement(By.className("growl-message"))));
     }
 
     public static WebDriver getChromeDriver(){
