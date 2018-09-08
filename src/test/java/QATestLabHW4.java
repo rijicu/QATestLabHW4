@@ -1,40 +1,20 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by stoykov on 02.09.2018.
  */
 
 public class QATestLabHW4 extends DriverManager {
-/*    WebDriver driver = getChromeDriver();
-    EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
-    WebDriverWait wait = new WebDriverWait(driver, 10);*/
 
     @DataProvider(name = "Authentication")
     public static Object[][] credentials(){
         return new Object[][] {{"webinar.test@gmail.com","Xcg7299bnSmMuRLp9ITw"}};
     }
-
-/*    @BeforeClass
-    public void setUp(){
-        eventDriver.register(new WebEventListener());
-        eventDriver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-        eventDriver.manage().window().maximize();
-    }*/
 
     @Test(dataProvider = "Authentication")
     public void addNewProduct(String adminEmail,String adminPass){
@@ -57,11 +37,6 @@ public class QATestLabHW4 extends DriverManager {
         Assert.assertEquals(eventDriver.findElement(By.xpath("//div[@class='product-quantities']//span")).getText(),"5 Товары");
 
     }
-
-/*    @AfterClass
-    public void closeDriver(){
-        eventDriver.quit();
-    }*/
 
     private void loginAsAdmin(String adminEmail, String adminPass) {
         WebElement emailInput = eventDriver.findElement(By.id("email"));
@@ -96,7 +71,7 @@ public class QATestLabHW4 extends DriverManager {
         WebElement activateButton = eventDriver.findElement(By.className("switch-input "));
         activateButton.click();
         wait.until(ExpectedConditions.visibilityOf(eventDriver.findElement(By.className("growl-message"))));
-        System.out.println(eventDriver.findElement(By.className("growl-message")).getText());
+        //System.out.println(eventDriver.findElement(By.className("growl-message")).getText());
         Assert.assertEquals(eventDriver.findElement(By.className("growl-message")).getText(),"Настройки обновлены.");
         eventDriver.findElement(By.className("growl-close")).click();
         wait.until(ExpectedConditions.invisibilityOf(eventDriver.findElement(By.className("growl-message"))));
@@ -107,10 +82,5 @@ public class QATestLabHW4 extends DriverManager {
         eventDriver.findElement(By.className("growl-close")).click();
         wait.until(ExpectedConditions.invisibilityOf(eventDriver.findElement(By.className("growl-message"))));
     }
-
-/*    public static WebDriver getChromeDriver(){
-        System.setProperty("webdriver.chrome.driver", QATestLabHW4.class.getResource("chromedriver.exe").getPath());
-        return new ChromeDriver();
-    }*/
 
 }
