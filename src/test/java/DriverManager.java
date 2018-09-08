@@ -48,6 +48,7 @@ public class DriverManager {
     public void setUp(@Optional("chrome") String browser){
         driver = getDriver(browser);
         eventDriver = new EventFiringWebDriver(driver);
+        eventDriver.register(new WebEventListener());
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(30,TimeUnit.SECONDS);
