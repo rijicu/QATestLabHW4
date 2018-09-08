@@ -19,22 +19,22 @@ import java.util.concurrent.TimeUnit;
  * Created by stoykov on 02.09.2018.
  */
 
-public class QATestLabHW4 {
-    WebDriver driver = getChromeDriver();
+public class QATestLabHW4 extends DriverManager {
+/*    WebDriver driver = getChromeDriver();
     EventFiringWebDriver eventDriver = new EventFiringWebDriver(driver);
-    WebDriverWait wait = new WebDriverWait(driver, 10);
+    WebDriverWait wait = new WebDriverWait(driver, 10);*/
 
     @DataProvider(name = "Authentication")
     public static Object[][] credentials(){
         return new Object[][] {{"webinar.test@gmail.com","Xcg7299bnSmMuRLp9ITw"}};
     }
 
-    @BeforeClass
+/*    @BeforeClass
     public void setUp(){
         eventDriver.register(new WebEventListener());
         eventDriver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
         eventDriver.manage().window().maximize();
-    }
+    }*/
 
     @Test(dataProvider = "Authentication")
     public void addNewProduct(String adminEmail,String adminPass){
@@ -58,10 +58,10 @@ public class QATestLabHW4 {
 
     }
 
-    @AfterClass
+/*    @AfterClass
     public void closeDriver(){
         eventDriver.quit();
-    }
+    }*/
 
     private void loginAsAdmin(String adminEmail, String adminPass) {
         WebElement emailInput = eventDriver.findElement(By.id("email"));
@@ -100,7 +100,7 @@ public class QATestLabHW4 {
         Assert.assertEquals(eventDriver.findElement(By.className("growl-message")).getText(),"Настройки обновлены.");
         eventDriver.findElement(By.className("growl-close")).click();
         wait.until(ExpectedConditions.invisibilityOf(eventDriver.findElement(By.className("growl-message"))));
-        WebElement saveButton = eventDriver.findElement(By.xpath("//input[@type='submit']")); //button[@type='submit']//span - old path
+        WebElement saveButton = eventDriver.findElement(By.xpath("//button[@type='submit']//span")); //button[@type='submit']//span, //input[@type='submit'] - old path
         saveButton.click();
         wait.until(ExpectedConditions.visibilityOf(eventDriver.findElement(By.className("growl-message"))));
         Assert.assertEquals(eventDriver.findElement(By.className("growl-message")).getText(),"Настройки обновлены.");
@@ -108,9 +108,9 @@ public class QATestLabHW4 {
         wait.until(ExpectedConditions.invisibilityOf(eventDriver.findElement(By.className("growl-message"))));
     }
 
-    public static WebDriver getChromeDriver(){
+/*    public static WebDriver getChromeDriver(){
         System.setProperty("webdriver.chrome.driver", QATestLabHW4.class.getResource("chromedriver.exe").getPath());
         return new ChromeDriver();
-    }
+    }*/
 
 }
