@@ -5,6 +5,7 @@
         <parameter name="selenium.browser" value="chrome" />
         <classes>
             <class name="QATestLabHW4" />
+            <class name="QATestLabHW5"/>
         </classes>
     </test>
 
@@ -12,6 +13,7 @@
         <parameter name="selenium.browser" value="firefox" />
         <classes>
             <class name="QATestLabHW4"/>
+            <class name="QATestLabHW5"/>
         </classes>
     </test>
 
@@ -19,6 +21,20 @@
         <parameter name="selenium.browser" value="internet explorer" />
         <classes>
             <class name="QATestLabHW4"/>
+            <class name="QATestLabHW5"/>
+        </classes>
+    </test>
+
+    <test name="Test on mobile browser">
+        <parameter name="selenium.browser" value="mobile" />
+        <classes>
+            <class name="QATestLabHW5"/>
+        </classes>
+    </test>
+    <test name="Test on selenium Grid">
+        <parameter name="selenium.browser" value="remote-chrome" />
+        <classes>
+            <class name="QATestLabHW5"/>
         </classes>
     </test>
 </suite>
